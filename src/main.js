@@ -30,6 +30,30 @@ function renderMovies(movies, container) {
   })
 }
 
+function renderCategories(categories, container) {
+  
+    // Clean the container
+    container.innerHTML = '';
+  
+    // Create a category container for each category in the DOM
+    categories.forEach(category => {
+      const categoryContainer = document.createElement('div');
+      categoryContainer.classList.add('category-container');
+  
+      const categoryTitle = document.createElement('h3');
+      categoryTitle.classList.add('category-title');
+      categoryTitle.setAttribute('id', 'id' + category.id);
+      categoryTitle.textContent = category.name;
+      categoryContainer.appendChild(categoryTitle);
+  
+      categoryContainer.addEventListener('click', () => {
+        location.hash = `#category=${category.id}-${category.name}`;
+      });
+  
+      container.appendChild(categoryContainer);
+    })
+}
+
 // API calls
 
 async function getTrendingMoviesPreview() {
@@ -52,23 +76,9 @@ async function getCategoriesPreview() {
   const { data } = await api('genre/movie/list');
   const categories = data.genres;
 
-  // Create a category container for each category in the DOM
-  categories.forEach(category => {
-    const categoryContainer = document.createElement('div');
-    categoryContainer.classList.add('category-container');
+  // Render the categories
+  renderCategories(categories, categoriesPreviewList);
 
-    const categoryTitle = document.createElement('h3');
-    categoryTitle.classList.add('category-title');
-    categoryTitle.setAttribute('id', 'id' + category.id);
-    categoryTitle.textContent = category.name;
-    categoryContainer.appendChild(categoryTitle);
-
-    categoryContainer.addEventListener('click', () => {
-      location.hash = `#category=${category.id}-${category.name}`;
-    });
- 
-    categoriesPreviewList.appendChild(categoryContainer);
-  })
 }
 
 async function getMoviesByCategory(id) {
