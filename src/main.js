@@ -8,13 +8,12 @@ const api = axios.create({
   }
 });
 
-async function getTrendingMoviesPreview() {
+// Utils
 
-  if (trendingMoviesPreviewList.children.length > 0) return;
+function renderMovies(movies, container) {
 
-  // Retrieve the movies from the API
-  const { data } = await api('trending/movie/day');
-  const movies = data.results;
+  // Clean the container
+  container.innerHTML = '';
 
   // Create a movie container for each movie in the DOM
   movies.forEach(movie => {
@@ -27,8 +26,22 @@ async function getTrendingMoviesPreview() {
     movieImg.setAttribute('alt', movie.title);
     movieContainer.appendChild(movieImg);
 
-    trendingMoviesPreviewList.appendChild(movieContainer);
+    container.appendChild(movieContainer);
   })
+}
+
+// API calls
+
+async function getTrendingMoviesPreview() {
+
+  if (trendingMoviesPreviewList.children.length > 0) return;
+
+  // Retrieve the movies from the API
+  const { data } = await api('trending/movie/day');
+  const movies = data.results;
+
+  // Render the movies
+  renderMovies(movies, trendingMoviesPreviewList);
 }
 
 async function getCategoriesPreview() {
@@ -68,20 +81,6 @@ async function getMoviesByCategory(id) {
   });
   const movies = data.results;
 
-  // Clean the container
-  genericSection.innerHTML = '';
-
-  // Create a movie container for each movie in the DOM
-  movies.forEach(movie => {
-    const movieContainer = document.createElement('div');
-    movieContainer.classList.add('movie-container');
-
-    const movieImg = document.createElement('img');
-    movieImg.classList.add('movie-img');
-    movieImg.setAttribute('src', 'https://image.tmdb.org/t/p/w300' + movie.poster_path);
-    movieImg.setAttribute('alt', movie.title);
-    movieContainer.appendChild(movieImg);
-
-    genericSection.appendChild(movieContainer);
-  })
+  // Render the movies
+  renderMovies(movies, genericSection);
 }
