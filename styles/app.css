@@ -23,6 +23,8 @@
   --font-weight-title2: 700;
   --font-weight-text1: 400;
   --font-weight-text2: 500;
+
+  --max-width: 900px;
 }
 
 html {
@@ -41,8 +43,9 @@ body {
 
 main {
   margin: 0 auto;
-  max-width: 960px;
+  max-width: var(--max-width);
   padding: 0 24px;
+  position: relative;
 }
 
 h1, h2, h3 {
@@ -130,13 +133,15 @@ button {
 }
 
 .header-container--long {
-  background-image: url('https://pics.filmaffinity.com/Deadpool-777527803-large.jpg');
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 19.27%, rgba(0, 0, 0, 0) 29.17%), url(https://pics.filmaffinity.com/Deadpool-777527803-large.jpg);
   background-size: cover !important;
   height: 480px;
   position: fixed;
   top: 0;
+  left: 50%;
   width: 100%;
+  transform: translateX(-50%);
+  max-width: var(--max-width);
 }
 
 .header-container--categoryView {
@@ -233,7 +238,6 @@ button {
 .category-title::before {
   content: '••••';
   color: transparent;
-  /* TODO: cambiar color por ID de la categoría */
   background-color: var(--idColor);
   border-radius: 8px;
   margin-right: 8px;
@@ -284,10 +288,13 @@ button {
 .movieDetail-container {
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  max-width: var(--max-width);
+  width: 100%;
   padding: 32px 24px;
   margin-top: 403px;
   z-index: 1;
   position: absolute;
+  left: 0;
   background-color: var(--purple-light-1);
 }
 
@@ -328,7 +335,7 @@ button {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  width: calc(100vw - 24px);
+  width: 100%;
   padding-bottom: 16px;
 }
 

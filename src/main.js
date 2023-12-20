@@ -25,8 +25,7 @@ async function getTrendingMoviesPreview() {
     movieImg.setAttribute('alt', movie.title);
     movieContainer.appendChild(movieImg);
 
-    const trendingMovies = document.querySelector('.trendingPreview-movieList');
-    trendingMovies.appendChild(movieContainer);
+    trendingMoviesPreviewList.appendChild(movieContainer);
   })
 }
 
@@ -46,11 +45,7 @@ async function getCategoriesPreview() {
     categoryTitle.setAttribute('id', 'id' + category.id);
     categoryTitle.textContent = category.name;
     categoryContainer.appendChild(categoryTitle);
-
-    const trendingMovies = document.querySelector('.categoriesPreview-list');
-    trendingMovies.appendChild(categoryContainer);
+ 
+    categoriesPreviewList.appendChild(categoryContainer);
   })
 }
-
-getTrendingMoviesPreview();
-getCategoriesPreview();
