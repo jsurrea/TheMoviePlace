@@ -1,8 +1,21 @@
 searchFormBtn.addEventListener('click', () => location.hash = `#search=${searchFormInput.value}`);
 trendingBtn.addEventListener('click', () => location.hash = '#trends');
-arrowBtn.addEventListener('click', () => location.hash = '#home');
+arrowBtn.addEventListener('click', () => {
+  const stateLoad = window.history.state ? window.history.state.loadUrl : 
+    '';
+  console.log(stateLoad);
+  if (stateLoad.includes('#')) {
+    window.location.hash = '';
+  } else {
+    window.history.back();
+  }
+});
 
-window.addEventListener('DOMContentLoaded', navigator, false);
+window.addEventListener('DOMContentLoaded', () => {
+  navigator();
+  // Add a initial loading state
+  window.history.pushState({ loadUrl: window.location.href }, null, '')
+}, false);
 window.addEventListener('hashchange', navigator, false);
 
 function navigator() {
@@ -17,6 +30,9 @@ function navigator() {
   } else {
     homePage();
   }
+
+  // Scroll to top
+  document.documentElement.scrollTop = 0;
 }
 
 function homePage() {
@@ -55,8 +71,9 @@ function categoriesPage() {
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
 
-  const categoryId = location.hash.split('=')[1].split('-')[0];
+  const [categoryId, categoryName] = location.hash.split('=')[1].split('-');
   getMoviesByCategory(categoryId);
+  headerCategoryTitle.textContent = categoryName;
 
 }
 
@@ -94,6 +111,10 @@ function searchPage() {
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
 
+  const query = decodeURI(location.hash.split('=')[1]).trim();
+  getMoviesBySearch(query);
+
+  headerCategoryTitle.textContent = `Search results: "${query}"`;
 }
 
 function trendsPage() {
@@ -112,4 +133,6 @@ function trendsPage() {
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
 
+  getTrendingMovies();
+  headerCategoryTitle.textContent = "Trending Movies";
 }

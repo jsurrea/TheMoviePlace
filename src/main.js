@@ -20,9 +20,11 @@ function renderMovies(movies, container) {
     const movieContainer = document.createElement('div');
     movieContainer.classList.add('movie-container');
 
+    const imgSrc = movie.poster_path ? movie.poster_path : movie.backdrop_path;
+
     const movieImg = document.createElement('img');
     movieImg.classList.add('movie-img');
-    movieImg.setAttribute('src', 'https://image.tmdb.org/t/p/w300' + movie.poster_path);
+    movieImg.setAttribute('src', 'https://image.tmdb.org/t/p/w300' + imgSrc);
     movieImg.setAttribute('alt', movie.title);
     movieContainer.appendChild(movieImg);
 
@@ -89,6 +91,30 @@ async function getMoviesByCategory(id) {
       with_genres: id,
     }
   });
+  const movies = data.results;
+
+  // Render the movies
+  renderMovies(movies, genericSection);
+}
+
+async function getMoviesBySearch(query) {
+
+  // Retrieve the movies from the API
+  const { data } = await api('search/movie', {
+    params: {
+      query,
+    }
+  });
+  const movies = data.results;
+
+  // Render the movies
+  renderMovies(movies, genericSection);
+}
+
+async function getTrendingMovies() {
+
+  // Retrieve the movies from the API
+  const { data } = await api('trending/movie/day');
   const movies = data.results;
 
   // Render the movies
