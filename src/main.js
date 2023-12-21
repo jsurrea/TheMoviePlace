@@ -10,7 +10,19 @@ const api = axios.create({
 
 // Utils
 
-function renderMovies(movies, container) {
+const lazyLoader = new IntersectionObserver((entries, observer) => {
+  // This function will be called each time an image is intersecting the viewport
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target.querySelector('img');
+      const src = img.getAttribute('data-src');
+      img.setAttribute('src', src);
+      observer.unobserve(entry.target);
+    }
+  })
+});
+
+function renderMovies(movies, container, lazyLoad = false) {
 
   // Clean the container
   container.innerHTML = '';
@@ -24,13 +36,16 @@ function renderMovies(movies, container) {
 
     const movieImg = document.createElement('img');
     movieImg.classList.add('movie-img');
-    movieImg.setAttribute('src', 'https://image.tmdb.org/t/p/w300' + imgSrc);
+    movieImg.setAttribute(lazyLoad ? 'data-src' : 'src', 'https://image.tmdb.org/t/p/w300' + imgSrc);
     movieImg.setAttribute('alt', movie.title);
     movieContainer.appendChild(movieImg);
 
+    
     movieContainer.addEventListener('click', () => {
       location.hash = `#movie=${movie.id}-${movie.title}`;
     });
+    
+    if (lazyLoad) lazyLoader.observe(movieContainer);
 
     container.appendChild(movieContainer);
   })
@@ -69,7 +84,7 @@ async function getTrendingMoviesPreview() {
   const movies = data.results;
 
   // Render the movies
-  renderMovies(movies, trendingMoviesPreviewList);
+  renderMovies(movies, trendingMoviesPreviewList, true);
 }
 
 async function getCategoriesPreview() {
@@ -94,7 +109,7 @@ async function getMoviesByCategory(id) {
   const movies = data.results;
 
   // Render the movies
-  renderMovies(movies, genericSection);
+  renderMovies(movies, genericSection, true);
 }
 
 async function getMoviesBySearch(query) {
@@ -108,7 +123,7 @@ async function getMoviesBySearch(query) {
   const movies = data.results;
 
   // Render the movies
-  renderMovies(movies, genericSection);
+  renderMovies(movies, genericSection, true);
 }
 
 async function getTrendingMovies() {
@@ -118,7 +133,7 @@ async function getTrendingMovies() {
   const movies = data.results;
 
   // Render the movies
-  renderMovies(movies, genericSection);
+  renderMovies(movies, genericSection, true);
 }
 
 async function getMovieDetails(movieId) {
@@ -147,5 +162,5 @@ async function getMovieDetails(movieId) {
   const relatedMovies = data.results;
 
   // Render the related movies
-  renderMovies(relatedMovies, relatedMoviesContainer);
+  renderMovies(relatedMovies, relatedMoviesContainer, true);
 }
