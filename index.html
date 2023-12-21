@@ -17,10 +17,10 @@
     <header id="header" class="header-container">
       <span class="header-arrow inactive">&lt;</span>
       <h1 class="header-title">The Movie Place</h1>
-      <h1 class="header-title header-title--categoryView inactive">Action</h1>
+      <h1 class="header-title header-title--categoryView inactive"></h1>
 
       <form id="searchForm" class="header-searchForm">
-        <input type="text" placeholder="Avengers" />
+        <input type="text" placeholder="The Avengers" />
         <button id="searchBtn">🔍</button>
       </form>
     </header>
@@ -31,25 +31,77 @@
         <button class="trendingPreview-btn">Explore more</button>
       </div>
 
-      <article class="trendingPreview-movieList"></article>
+      <article class="trendingPreview-movieList">
+        <!-- Skeleton Loading -->
+        <div class="movie-container movie-container--loading"></div>
+        <div class="movie-container movie-container--loading"></div>
+        <div class="movie-container movie-container--loading"></div>
+        <div class="movie-container movie-container--loading"></div>
+        <div class="movie-container movie-container--loading"></div>
+      </article>
     </section>
 
     <section id="categoriesPreview" class="categoriesPreview-container">
       <h2 class="categoriesPreview-title">Categories</h2>
 
-      <article class="categoriesPreview-list"></article>
+      <article class="categoriesPreview-list">
+        <!-- Skeleton Loading -->
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+      </article>
     </section>
 
-    <section id="genericList" class="genericList-container inactive"></section>
+    <section id="genericList" class="genericList-container inactive">
+      <!-- Skeleton Loading -->
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+      <div class="movie-container movie-container--loading"></div>
+    </section>
 
     <section id="movieDetail" class="movieDetail-container inactive">
       <h1 class="movieDetail-title"></h1>
       <span class="movieDetail-score"></span>
       <p class="movieDetail-description"></p>
-      <article class="categories-list"></article>
+      <article class="categories-list">
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+        <div class="category-container category-container--loading"></div>
+      </article>
       <article class="relatedMovies-container">
         <h2 class="relatedMovies-title">Related Movies</h2>
-        <div class="relatedMovies-scrollContainer"></div>
+        <div class="relatedMovies-scrollContainer">
+          <div class="movie-container movie-container--loading"></div>
+          <div class="movie-container movie-container--loading"></div>
+          <div class="movie-container movie-container--loading"></div>
+          <div class="movie-container movie-container--loading"></div>
+          <div class="movie-container movie-container--loading"></div>
+          <div class="movie-container movie-container--loading"></div>
+        </div>
       </article>
     </section>
   </main>

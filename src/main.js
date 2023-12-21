@@ -64,8 +64,6 @@ function renderCategories(categories, container) {
 
 async function getTrendingMoviesPreview() {
 
-  if (trendingMoviesPreviewList.children.length > 0) return;
-
   // Retrieve the movies from the API
   const { data } = await api('trending/movie/day');
   const movies = data.results;
@@ -75,8 +73,6 @@ async function getTrendingMoviesPreview() {
 }
 
 async function getCategoriesPreview() {
-
-  if (categoriesPreviewList.children.length > 0) return;
 
   // Retrieve the categories from the API
   const { data } = await api('genre/movie/list');

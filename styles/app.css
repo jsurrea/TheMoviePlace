@@ -382,3 +382,66 @@ footer {
 .inactive {
   display: none;
 }
+
+/* Loading Skeletons */
+.movie-container--loading, .category-container--loading {
+  background-color: var(--purple-light-2);
+  border-radius: 8px;
+  animation: loading-skeleton 2s ease-in-out infinite;
+}
+
+.trendingPreview-movieList .movie-container--loading {
+  width: 150px;
+  height: 225px;
+}
+
+.genericList-container .movie-container--loading {
+  width: 150px;
+  height: 225px;
+  margin-bottom: 16px;
+}
+
+.relatedMovies-scrollContainer .movie-container--loading {
+  width: 125px;
+  height: 187.5px;
+}
+
+.categoriesPreview-list .category-container--loading,
+.categories-list .category-container--loading {
+  height: 21px;
+  margin-bottom: 8px; 
+}
+
+/* Animations */
+@keyframes loading-skeleton {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+}
+
+/* Delays */
+.movie-container--loading:nth-child(5n+1) {
+  animation-delay: 0ms;
+}
+.movie-container--loading:nth-child(5n+2) {
+  animation-delay: 400ms;
+}
+.movie-container--loading:nth-child(5n+3) {
+  animation-delay: 800ms;
+}
+.movie-container--loading:nth-child(5n+4) {
+  animation-delay: 1200ms;
+}
+.movie-container--loading:nth-child(5n) {
+  animation-delay: 1600ms;
+}
+
+.category-container--loading:nth-child(2n+1) {
+  animation-delay: 0ms;
+}
+.category-container--loading:nth-child(2n) {
+  animation-delay: 500ms;
+}

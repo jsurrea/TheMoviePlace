@@ -102,6 +102,8 @@ function movieDetailsPage() {
   movieDetailSection.classList.remove('inactive');
 
   const [movieId, movieTitle] = location.hash.split('=')[1].split('-');
+  // Preload the movie details
+  movieDetailTitle.innerText = decodeURI(movieTitle).trim();
   getMovieDetails(movieId);
   document.title = decodeURI(movieTitle).trim() + " 🎬";
 }
