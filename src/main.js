@@ -28,6 +28,10 @@ function renderMovies(movies, container) {
     movieImg.setAttribute('alt', movie.title);
     movieContainer.appendChild(movieImg);
 
+    movieContainer.addEventListener('click', () => {
+      location.hash = `#movie=${movie.id}-${movie.title}`;
+    });
+
     container.appendChild(movieContainer);
   })
 }
@@ -119,4 +123,33 @@ async function getTrendingMovies() {
 
   // Render the movies
   renderMovies(movies, genericSection);
+}
+
+async function getMovieDetails(movieId) {
+
+  // Retrieve the details from the API
+  const { data: movie } = await api('movie/' + movieId);
+
+  // Set the movie details
+  movieDetailTitle.textContent = movie.title;
+  movieDetailDescription.textContent = movie.overview;
+  movieDetailScore.textContent = movie.vote_average.toFixed(1);
+
+  // Set the background image
+  if (movie.backdrop_path) {
+    headerSection.style.backgroundImage = `url(https://image.tmdb.org/t/p/original/${movie.backdrop_path})`;
+  } else if (movie.poster_path) {
+    headerSection.style.backgroundImage = `url(https://image.tmdb.org/t/p/original/${movie.poster_path})`;
+  }
+  
+  // Set the categories
+  const categories = movie.genres;
+  renderCategories(categories, movieDetailCategoriesList);
+
+  // Retrieve the related movies from the API
+  const { data } = await api('movie/' + movieId + '/recommendations');
+  const relatedMovies = data.results;
+
+  // Render the related movies
+  renderMovies(relatedMovies, relatedMoviesContainer);
 }

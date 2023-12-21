@@ -1,4 +1,7 @@
-searchFormBtn.addEventListener('click', () => location.hash = `#search=${searchFormInput.value}`);
+searchFormBtn.addEventListener('click', () => {
+  if (searchFormInput.value.trim() === '') return;
+  location.hash = `#search=${searchFormInput.value}`;
+});
 trendingBtn.addEventListener('click', () => location.hash = '#trends');
 arrowBtn.addEventListener('click', () => {
   const stateLoad = window.history.state ? window.history.state.loadUrl : 
@@ -19,6 +22,10 @@ window.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('hashchange', navigator, false);
 
 function navigator() {
+
+  // Clear background image
+  headerSection.style.backgroundImage = '';
+
   if (location.hash.startsWith('#trends')) {
     trendsPage();
   } else if (location.hash.startsWith('#search=')) {
@@ -38,7 +45,7 @@ function navigator() {
 function homePage() {
 
   headerSection.classList.remove('header-container--long');
-  headerSection.style.background = '';
+  headerSection.classList.remove('header-container-back')
   footerSection.classList.remove('inactive');
   arrowBtn.classList.add('inactive');
   arrowBtn.classList.remove('header-arrow--white');
@@ -53,12 +60,13 @@ function homePage() {
 
   getTrendingMoviesPreview();
   getCategoriesPreview();
+  document.title = "The Movie Place 🍿"
 }
 
 function categoriesPage() {
 
   headerSection.classList.remove('header-container--long');
-  headerSection.style.background = '';
+  headerSection.classList.add('header-container-back')
   footerSection.classList.remove('inactive');
   arrowBtn.classList.remove('inactive');
   arrowBtn.classList.remove('header-arrow--white');
@@ -73,14 +81,14 @@ function categoriesPage() {
 
   const [categoryId, categoryName] = location.hash.split('=')[1].split('-');
   getMoviesByCategory(categoryId);
-  headerCategoryTitle.textContent = categoryName;
-
+  headerCategoryTitle.textContent = decodeURI(categoryName).trim();
+  document.title = decodeURI(categoryName).trim();
 }
 
 function movieDetailsPage() {
 
   headerSection.classList.add('header-container--long');
-  //headerSection.style.background = '';
+  headerSection.classList.remove('header-container-back')
   footerSection.classList.add('inactive');
   arrowBtn.classList.remove('inactive');
   arrowBtn.classList.add('header-arrow--white');
@@ -93,12 +101,15 @@ function movieDetailsPage() {
   genericSection.classList.add('inactive');
   movieDetailSection.classList.remove('inactive');
 
+  const [movieId, movieTitle] = location.hash.split('=')[1].split('-');
+  getMovieDetails(movieId);
+  document.title = decodeURI(movieTitle).trim() + " 🎬";
 }
 
 function searchPage() {
 
   headerSection.classList.remove('header-container--long');
-  headerSection.style.background = '';
+  headerSection.classList.remove('header-container-back')
   footerSection.classList.remove('inactive');
   arrowBtn.classList.remove('inactive');
   arrowBtn.classList.remove('header-arrow--white');
@@ -115,12 +126,13 @@ function searchPage() {
   getMoviesBySearch(query);
 
   headerCategoryTitle.textContent = `Search results: "${query}"`;
+  document.title = "Search Results 🔎"
 }
 
 function trendsPage() {
 
   headerSection.classList.remove('header-container--long');
-  headerSection.style.background = '';
+  headerSection.classList.add('header-container-back')
   footerSection.classList.remove('inactive');
   arrowBtn.classList.remove('inactive');
   arrowBtn.classList.remove('header-arrow--white');
@@ -135,4 +147,5 @@ function trendsPage() {
 
   getTrendingMovies();
   headerCategoryTitle.textContent = "Trending Movies";
+  document.title = "Trending Movies 📈"
 }
