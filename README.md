@@ -10,3 +10,6 @@
 - Lazy Loading
   - Interception Observer
   - Defaults for missing values
+- Infinite Scroll
+  - Singleton Interception Observer
+  - API Pagination

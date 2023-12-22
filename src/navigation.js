@@ -108,6 +108,7 @@ function movieDetailsPage() {
   movieDetailTitle.innerText = decodeURI(movieTitle).trim();
   getMovieDetails(movieId);
   document.title = decodeURI(movieTitle).trim() + " 🎬";
+  relatedMoviesContainer.scrollLeft = 0;
 }
 
 function searchPage() {

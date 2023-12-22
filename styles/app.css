@@ -367,6 +367,7 @@ button {
   margin-right: 8px;
   width: 125px;
   height: 187.5px;
+  overflow: hidden;
 }
 
 .relatedMovies-scrollContainer .movie-img {

@@ -127,37 +127,47 @@ async function getCategoriesPreview() {
 
 }
 
-async function getMoviesByCategory(id) {
+async function getMoviesByCategory(id, page = 1) {
 
   // Retrieve the movies from the API
   const { data } = await api('discover/movie', {
     params: {
       with_genres: id,
+      page,
     }
   });
   const movies = data.results;
+  const total_pages = data.total_pages;
 
   // Render the movies
-  renderMovies(movies, genericSection, true);
+  renderMovies(movies, genericSection, true, page > 1);
+
+  // Create the infinite scroll
+  if (page < total_pages)
+    createInfiniteScroll(() => getMoviesByCategory(id, page + 1));
 }
 
-async function getMoviesBySearch(query) {
+async function getMoviesBySearch(query, page = 1) {
 
   // Retrieve the movies from the API
   const { data } = await api('search/movie', {
     params: {
       query,
+      page,
     }
   });
   const movies = data.results;
-
+  const total_pages = data.total_pages;
+  
   // Render the movies
-  renderMovies(movies, genericSection, true);
+  renderMovies(movies, genericSection, true, page > 1);
+
+  // Create the infinite scroll
+  if (page < total_pages)
+    createInfiniteScroll(() => getMoviesBySearch(query, page + 1));
 }
 
 async function getTrendingMovies(page = 1) {
-
-  console.log('Page ', page);
 
   // Retrieve the movies from the API
   const { data } = await api('trending/movie/day', {
@@ -166,12 +176,14 @@ async function getTrendingMovies(page = 1) {
     }
   });
   const movies = data.results;
+  const total_pages = data.total_pages;
 
   // Render the movies
   renderMovies(movies, genericSection, true, page > 1);
 
   // Create the infinite scroll
-  createInfiniteScroll(() => getTrendingMovies(page + 1));
+  if (page < total_pages)
+    createInfiniteScroll(() => getTrendingMovies(page + 1));
 }
 
 async function getMovieDetails(movieId) {
