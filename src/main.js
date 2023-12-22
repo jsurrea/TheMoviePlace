@@ -32,14 +32,20 @@ function renderMovies(movies, container, lazyLoad = false) {
     const movieContainer = document.createElement('div');
     movieContainer.classList.add('movie-container');
 
-    const imgSrc = movie.poster_path ? movie.poster_path : movie.backdrop_path;
-
     const movieImg = document.createElement('img');
     movieImg.classList.add('movie-img');
-    movieImg.setAttribute(lazyLoad ? 'data-src' : 'src', 'https://image.tmdb.org/t/p/w300' + imgSrc);
+    movieImg.setAttribute(lazyLoad ? 'data-src' : 'src', 'https://image.tmdb.org/t/p/w300' + movie.poster_path);
     movieImg.setAttribute('alt', movie.title);
     movieContainer.appendChild(movieImg);
-
+    movieImg.addEventListener('error', () => {
+      movieContainer.removeChild(movieImg);
+      const defaultCover = document.createElement('div');
+      defaultCover.classList.add('default-cover');
+      const textContainer = document.createElement('p');
+      textContainer.textContent = movie.title;
+      defaultCover.appendChild(textContainer);
+      movieContainer.appendChild(defaultCover);
+    });
     
     movieContainer.addEventListener('click', () => {
       location.hash = `#movie=${movie.id}-${movie.title}`;
@@ -130,6 +136,27 @@ async function getTrendingMovies() {
 
   // Retrieve the movies from the API
   const { data } = await api('trending/movie/day');
+  const movies = data.results;
+
+  // Render the movies
+  renderMovies(movies, genericSection, true);
+
+  const btnLoadMore = document.createElement('button');
+  btnLoadMore.innerText = 'Load more';
+  genericSection.appendChild(btnLoadMore);
+  btnLoadMore.addEventListener('click', () => {
+    getPaginatedTrendingMovies();
+  });
+}
+
+async function getPaginatedTrendingMovies() {
+
+  // Retrieve the movies from the API
+  const { data } = await api('trending/movie/day', {
+    params: {
+      page: 2,
+    }
+  });
   const movies = data.results;
 
   // Render the movies
