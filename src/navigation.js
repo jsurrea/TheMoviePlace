@@ -6,7 +6,6 @@ trendingBtn.addEventListener('click', () => location.hash = '#trends');
 arrowBtn.addEventListener('click', () => {
   const stateLoad = window.history.state ? window.history.state.loadUrl : 
     '';
-  console.log(stateLoad);
   if (stateLoad.includes('#')) {
     window.location.hash = '';
   } else {
@@ -19,7 +18,10 @@ window.addEventListener('DOMContentLoaded', () => {
   // Add a initial loading state
   window.history.pushState({ loadUrl: window.location.href }, null, '')
 }, false);
-window.addEventListener('hashchange', navigator, false);
+window.addEventListener('hashchange', () => {
+  createInfiniteScroll.instance?.disconnect();
+  navigator();
+}, false);
 
 function navigator() {
 

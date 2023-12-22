@@ -22,6 +22,29 @@ const lazyLoader = new IntersectionObserver((entries, observer) => {
   })
 });
 
+function createInfiniteScroll(callback) {
+  // Singleton pattern for easy cleanup
+  if (createInfiniteScroll.instance) createInfiniteScroll.instance.disconnect();
+  
+  createInfiniteScroll.instance = new IntersectionObserver((entries, observer) => {
+    // This function will be called each time the footer container is approaching the viewport
+    // It will destroy the observer upon calling the callback
+    anyIntersection = false;
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        callback();
+        anyIntersection = true;
+      }
+    })
+    if (anyIntersection) {
+      observer.disconnect();
+    }
+  }, {
+    rootMargin: '0px 0px 100px 0px',
+  });
+  createInfiniteScroll.instance.observe(footerSection);
+}
+
 function renderMovies(movies, container, lazyLoad = false, append = false) {
 
   // Clean the container
@@ -134,6 +157,8 @@ async function getMoviesBySearch(query) {
 
 async function getTrendingMovies(page = 1) {
 
+  console.log('Page ', page);
+
   // Retrieve the movies from the API
   const { data } = await api('trending/movie/day', {
     params: {
@@ -145,14 +170,8 @@ async function getTrendingMovies(page = 1) {
   // Render the movies
   renderMovies(movies, genericSection, true, page > 1);
 
-  // TODO temporary solution
-  const btnLoadMore = document.createElement('button');
-  btnLoadMore.innerText = 'Load more';
-  genericSection.appendChild(btnLoadMore);
-  btnLoadMore.addEventListener('click', () => {
-    getTrendingMovies(page + 1);
-    btnLoadMore.remove();
-  });
+  // Create the infinite scroll
+  createInfiniteScroll(() => getTrendingMovies(page + 1));
 }
 
 async function getMovieDetails(movieId) {
