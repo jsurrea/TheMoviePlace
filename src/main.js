@@ -151,6 +151,7 @@ async function getTrendingMovies(page = 1) {
   genericSection.appendChild(btnLoadMore);
   btnLoadMore.addEventListener('click', () => {
     getTrendingMovies(page + 1);
+    btnLoadMore.remove();
   });
 }
 
