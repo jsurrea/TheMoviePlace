@@ -22,10 +22,10 @@ const lazyLoader = new IntersectionObserver((entries, observer) => {
   })
 });
 
-function renderMovies(movies, container, lazyLoad = false) {
+function renderMovies(movies, container, lazyLoad = false, append = false) {
 
   // Clean the container
-  container.innerHTML = '';
+  if (!append) container.innerHTML = '';
 
   // Create a movie container for each movie in the DOM
   movies.forEach(movie => {
@@ -132,35 +132,26 @@ async function getMoviesBySearch(query) {
   renderMovies(movies, genericSection, true);
 }
 
-async function getTrendingMovies() {
-
-  // Retrieve the movies from the API
-  const { data } = await api('trending/movie/day');
-  const movies = data.results;
-
-  // Render the movies
-  renderMovies(movies, genericSection, true);
-
-  const btnLoadMore = document.createElement('button');
-  btnLoadMore.innerText = 'Load more';
-  genericSection.appendChild(btnLoadMore);
-  btnLoadMore.addEventListener('click', () => {
-    getPaginatedTrendingMovies();
-  });
-}
-
-async function getPaginatedTrendingMovies() {
+async function getTrendingMovies(page = 1) {
 
   // Retrieve the movies from the API
   const { data } = await api('trending/movie/day', {
     params: {
-      page: 2,
+      page,
     }
   });
   const movies = data.results;
 
   // Render the movies
-  renderMovies(movies, genericSection, true);
+  renderMovies(movies, genericSection, true, page > 1);
+
+  // TODO temporary solution
+  const btnLoadMore = document.createElement('button');
+  btnLoadMore.innerText = 'Load more';
+  genericSection.appendChild(btnLoadMore);
+  btnLoadMore.addEventListener('click', () => {
+    getTrendingMovies(page + 1);
+  });
 }
 
 async function getMovieDetails(movieId) {
