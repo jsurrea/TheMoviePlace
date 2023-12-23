@@ -241,6 +241,11 @@ footer {
   height: 241px;
   padding-left: 24px;
   padding-bottom: 16px;
+  display: grid;
+  grid-template-rows: 225px;
+  grid-auto-columns: 150px;
+  grid-auto-flow: column;
+  gap: 8px;
 }
 
 .trendingPreview-movieList .movie-container,

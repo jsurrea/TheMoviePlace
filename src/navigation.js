@@ -17,6 +17,9 @@ window.addEventListener('DOMContentLoaded', () => {
   navigator();
   // Add a initial loading state
   window.history.pushState({ loadUrl: window.location.href }, null, '')
+
+  // Load favorites
+  renderMovies(getFavorites(), favoriteMoviesList, true);
 }, false);
 window.addEventListener('hashchange', () => {
   createInfiniteScroll.instance?.disconnect();

@@ -15,6 +15,38 @@ const toggleLike = (movieContainer) => {
   const likeIcon = likeBtn.querySelector('i');
   likeIcon.classList.toggle('fas');
   likeIcon.classList.toggle('far');
+  const favorites = getFavorites();
+  const movie = {
+    id: Number(movieContainer.getAttribute('data-id')),
+    title: movieContainer.getAttribute('data-title'),
+    poster_path: movieContainer.getAttribute('data-poster_path'),
+  }
+  if (likeIcon.classList.contains('fas')) {
+    // Add to favorites
+    favorites.push(movie);
+  } else {
+    // Remove from favorites
+    const index = favorites.findIndex(favorite => favorite.id === movie.id);
+    favorites.splice(index, 1);
+    Array.from(trendingMoviesPreviewList.children).forEach(movieContainerElement => {
+      if (Number(movieContainerElement.getAttribute('data-id')) === movie.id) {
+        const likeIcon = movieContainerElement.querySelector('.like-button i');
+        likeIcon.classList.add('far');
+        likeIcon.classList.remove('fas');
+      }
+    });
+  }
+  setFavorites(favorites);
+  renderMovies(favorites, favoriteMoviesList, true);
+}
+
+const getFavorites = () => { 
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  return favorites;
+}
+
+const setFavorites = (favorites) => { 
+  localStorage.setItem('favorites', JSON.stringify(favorites));
 }
 
 const lazyLoader = new IntersectionObserver((entries, observer) => {
@@ -61,6 +93,9 @@ function renderMovies(movies, container, lazyLoad = false, append = false) {
   movies.forEach(movie => {
     const movieContainer = document.createElement('div');
     movieContainer.classList.add('movie-container');
+    movieContainer.setAttribute('data-id', movie.id);
+    movieContainer.setAttribute('data-title', movie.title);
+    movieContainer.setAttribute('data-poster_path', movie.poster_path);
 
     const movieImg = document.createElement('img');
     movieImg.classList.add('movie-img');
@@ -78,8 +113,9 @@ function renderMovies(movies, container, lazyLoad = false, append = false) {
     });
 
     const likeBtn = document.createElement('div');
+    const isFavorite = getFavorites().find(favorite => favorite.id === movie.id) !== undefined;
     likeBtn.classList.add('like-button');
-    likeBtn.innerHTML = '<i class="far fa-heart"></i>';
+    likeBtn.innerHTML = `<i class="${isFavorite ? "fas" : "far"} fa-heart"></i>`;
     likeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       toggleLike(movieContainer);

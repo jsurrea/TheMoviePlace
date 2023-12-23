@@ -5,6 +5,7 @@ const headerSection = $('#header');
 const trendingPreviewSection = $('#trendingPreview');
 const categoriesPreviewSection = $('#categoriesPreview');
 const favoritesSection = $('#favorites');
+const favoriteMoviesList = $('.favorites-movieList');
 const genericSection = $('#genericList');
 const movieDetailSection = $('#movieDetail');
 const footerSection = $('#footer');
