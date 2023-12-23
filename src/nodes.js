@@ -32,5 +32,3 @@ const movieDetailTitle = $('.movieDetail-title');
 const movieDetailDescription = $('.movieDetail-description');
 const movieDetailScore = $('.movieDetail-score');
 
-// Language labels
-
