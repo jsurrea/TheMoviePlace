@@ -10,6 +10,15 @@ const api = axios.create({
 
 // Utils
 
+const createNoMoviesContainer = (container) => { 
+  const noMoviesContainer = document.createElement('div');
+  noMoviesContainer.classList.add('no-movies-container');
+  const noMoviesText = document.createElement('p');
+  noMoviesText.textContent = "We're sorry. We didn't find any movies 😭";
+  noMoviesContainer.appendChild(noMoviesText);
+  container.appendChild(noMoviesContainer);
+}
+
 const toggleLike = (movieContainer) => { 
   const likeBtn = movieContainer.querySelector('.like-button');
   const likeIcon = likeBtn.querySelector('i');
@@ -85,6 +94,13 @@ function createInfiniteScroll(callback) {
 }
 
 function renderMovies(movies, container, lazyLoad = false, append = false) {
+
+  // If there are no movies, create a no movies container
+  if (movies.length === 0) {
+    container.innerHTML = '';
+    createNoMoviesContainer(container);
+    return;
+  }
 
   // Clean the container
   if (!append) container.innerHTML = '';

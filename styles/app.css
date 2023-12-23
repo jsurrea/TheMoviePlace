@@ -98,6 +98,25 @@ button {
 
 
 /* Shared */
+
+.favorites-movieList:has(.no-movies-container) {
+  grid-auto-columns: initial;
+}
+
+.no-movies-container {
+  display: grid;
+  place-items: center;
+  place-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: var(--purple-medium-1);
+  color: var(--purple-light-1);
+  font-family: var(--font-family-text);
+  font-weight: var(--font-weight-text1);
+  font-size: 16px;
+  border-radius: 8px;
+}
+
 .header-container, 
 .trendingPreview-header, 
 .categoriesPreview-container,
