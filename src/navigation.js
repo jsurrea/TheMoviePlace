@@ -14,19 +14,22 @@ arrowBtn.addEventListener('click', () => {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-  navigator();
+  navigate();
   // Add a initial loading state
   window.history.pushState({ loadUrl: window.location.href }, null, '')
 
   // Load favorites
   renderMovies(getFavorites(), favoriteMoviesList, true);
+
+  // Load the language
+  updateLabels(getLanguage());
 }, false);
 window.addEventListener('hashchange', () => {
   createInfiniteScroll.instance?.disconnect();
-  navigator();
+  navigate();
 }, false);
 
-function navigator() {
+function navigate() {
 
   // Clear background image
   headerSection.style.backgroundImage = '';
@@ -66,7 +69,7 @@ function homePage() {
 
   getTrendingMoviesPreview();
   getCategoriesPreview();
-  document.title = "The Movie Place 🍿"
+  document.title = getLangLabels(getLanguage()).home_title;
 }
 
 function categoriesPage() {
@@ -137,8 +140,8 @@ function searchPage() {
   const query = decodeURI(location.hash.split('=')[1]).trim();
   getMoviesBySearch(query);
 
-  headerCategoryTitle.textContent = `Search results: "${query}"`;
-  document.title = "Search Results 🔎"
+  headerCategoryTitle.textContent = `${getLangLabels(getLanguage().search_heading)} "${query}"`;
+  document.title = getLangLabels(getLanguage()).search_title;
 }
 
 function trendsPage() {
@@ -159,6 +162,6 @@ function trendsPage() {
   movieDetailSection.classList.add('inactive');
 
   getTrendingMovies();
-  headerCategoryTitle.textContent = "Trending Movies";
-  document.title = "Trending Movies 📈"
+  headerCategoryTitle.textContent = getLangLabels(getLanguage()).trends_heading;
+  document.title = getLangLabels(getLanguage()).trends_title;
 }

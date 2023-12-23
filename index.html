@@ -11,13 +11,21 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="./styles/app.css" />
 
-  <title>The Movie Place</title>
+  <title data-label="app_heading"></title>
 </head>
 <body>
   <main>
     <header id="header" class="header-container">
       <span class="header-arrow inactive">&lt;</span>
-      <h1 class="header-title">The Movie Place</h1>
+      <h1 class="header-title" data-label="app_heading"></h1>
+      
+      <select id="languageSelect">
+        <!-- <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option> -->
+        <!-- Add more options as needed -->
+      </select>
+      
       <h1 class="header-title header-title--categoryView inactive"></h1>
 
       <form id="searchForm" class="header-searchForm">
@@ -28,8 +36,8 @@
 
     <section id="trendingPreview" class="trendingPreview-container">
       <div class="trendingPreview-header">
-        <h2 class="trendingPreview-title">Trending</h2>
-        <button class="trendingPreview-btn">Explore more</button>
+        <h2 class="trendingPreview-title" data-label="trending_heading"></h2>
+        <button class="trendingPreview-btn" data-label="trending_button"></button>
       </div>
 
       <article class="trendingPreview-movieList">
@@ -43,7 +51,7 @@
     </section>
 
     <section id="categoriesPreview" class="categoriesPreview-container">
-      <h2 class="categoriesPreview-title">Categories</h2>
+      <h2 class="categoriesPreview-title" data-label="categories_heading"></h2>
 
       <article class="categoriesPreview-list">
         <!-- Skeleton Loading -->
@@ -94,7 +102,7 @@
         <div class="category-container category-container--loading"></div>
       </article>
       <article class="relatedMovies-container">
-        <h2 class="relatedMovies-title">Related Movies</h2>
+        <h2 class="relatedMovies-title" data-label="related_heading"></h2>
         <div class="relatedMovies-scrollContainer">
           <div class="movie-container movie-container--loading"></div>
           <div class="movie-container movie-container--loading"></div>
@@ -107,7 +115,7 @@
     </section>
 
     <section id="favorites" class="favorites-container">
-      <h2 class="favorites-title">My Favorites</h2>
+      <h2 class="favorites-title" data-label="favorites_heading"></h2>
       <article class="favorites-movieList">
         <!-- Skeleton Loading -->
         <div class="movie-container movie-container--loading"></div>
@@ -119,11 +127,12 @@
     </section>
   </main>
   
-  <footer id="footer">Made with love in Colombia 💛💙❤️</footer>
+  <footer id="footer" data-label="footer_text"></footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
   <script src="./src/secrets.js"></script>
   <script src="./src/nodes.js"></script>
+  <script src="./src/languages.js"></script>
   <script src="./src/main.js"></script>
   <script src="./src/navigation.js"></script>
 </body>

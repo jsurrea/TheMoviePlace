@@ -1,3 +1,5 @@
+const getLanguage = () => navigator.language || navigator.userLanguage;
+
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
   headers: {
@@ -8,13 +10,14 @@ const api = axios.create({
   }
 });
 
+
 // Utils
 
 const createNoMoviesContainer = (container) => { 
   const noMoviesContainer = document.createElement('div');
   noMoviesContainer.classList.add('no-movies-container');
   const noMoviesText = document.createElement('p');
-  noMoviesText.textContent = "We're sorry. We didn't find any movies 😭";
+  noMoviesText.textContent = getLangLabels(getLanguage()).no_movies;
   noMoviesContainer.appendChild(noMoviesText);
   container.appendChild(noMoviesContainer);
 }
@@ -177,7 +180,11 @@ function renderCategories(categories, container) {
 async function getTrendingMoviesPreview() {
 
   // Retrieve the movies from the API
-  const { data } = await api('trending/movie/day');
+  const { data } = await api('trending/movie/day', {
+    params: {
+      language: getLanguage(),
+    }
+  });
   const movies = data.results;
 
   // Render the movies
@@ -187,7 +194,11 @@ async function getTrendingMoviesPreview() {
 async function getCategoriesPreview() {
 
   // Retrieve the categories from the API
-  const { data } = await api('genre/movie/list');
+  const { data } = await api('genre/movie/list', {
+    params: {
+      language: getLanguage(),
+    }
+  });
   const categories = data.genres;
 
   // Render the categories
@@ -202,6 +213,7 @@ async function getMoviesByCategory(id, page = 1) {
     params: {
       with_genres: id,
       page,
+      language: getLanguage(),
     }
   });
   const movies = data.results;
@@ -222,6 +234,7 @@ async function getMoviesBySearch(query, page = 1) {
     params: {
       query,
       page,
+      language: getLanguage(),
     }
   });
   const movies = data.results;
@@ -241,6 +254,7 @@ async function getTrendingMovies(page = 1) {
   const { data } = await api('trending/movie/day', {
     params: {
       page,
+      language: getLanguage(),
     }
   });
   const movies = data.results;
@@ -257,7 +271,11 @@ async function getTrendingMovies(page = 1) {
 async function getMovieDetails(movieId) {
 
   // Retrieve the details from the API
-  const { data: movie } = await api('movie/' + movieId);
+  const { data: movie } = await api('movie/' + movieId, {
+    params: {
+      language: getLanguage(),
+    }
+  });
 
   // Set the movie details
   movieDetailTitle.textContent = movie.title;
@@ -276,7 +294,11 @@ async function getMovieDetails(movieId) {
   renderCategories(categories, movieDetailCategoriesList);
 
   // Retrieve the related movies from the API
-  const { data } = await api('movie/' + movieId + '/recommendations');
+  const { data } = await api('movie/' + movieId + '/recommendations', {
+    params: {
+      language: getLanguage(),
+    }
+  });
   const relatedMovies = data.results;
 
   // Render the related movies
