@@ -4,6 +4,7 @@ const $ = document.querySelector.bind(document);
 const headerSection = $('#header');
 const trendingPreviewSection = $('#trendingPreview');
 const categoriesPreviewSection = $('#categoriesPreview');
+const favoritesSection = $('#favorites');
 const genericSection = $('#genericList');
 const movieDetailSection = $('#movieDetail');
 const footerSection = $('#footer');
@@ -28,3 +29,4 @@ const trendingBtn = $('.trendingPreview-btn');
 const movieDetailTitle = $('.movieDetail-title');
 const movieDetailDescription = $('.movieDetail-description');
 const movieDetailScore = $('.movieDetail-score');
+

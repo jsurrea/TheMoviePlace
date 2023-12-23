@@ -1,5 +1,6 @@
 # TheMoviePlace
 
+- Mobile first, Responsive design
 - Axios 
 - TheMovieDB API
   - Auth
@@ -13,3 +14,7 @@
 - Infinite Scroll
   - Singleton Interception Observer
   - API Pagination
+- Local Storage
+  - Favorites
+- Internationalization
+  - Language switcher

@@ -10,6 +10,13 @@ const api = axios.create({
 
 // Utils
 
+const toggleLike = (movieContainer) => { 
+  const likeBtn = movieContainer.querySelector('.like-button');
+  const likeIcon = likeBtn.querySelector('i');
+  likeIcon.classList.toggle('fas');
+  likeIcon.classList.toggle('far');
+}
+
 const lazyLoader = new IntersectionObserver((entries, observer) => {
   // This function will be called each time an image is intersecting the viewport
   entries.forEach(entry => {
@@ -69,6 +76,15 @@ function renderMovies(movies, container, lazyLoad = false, append = false) {
       defaultCover.appendChild(textContainer);
       movieContainer.appendChild(defaultCover);
     });
+
+    const likeBtn = document.createElement('div');
+    likeBtn.classList.add('like-button');
+    likeBtn.innerHTML = '<i class="far fa-heart"></i>';
+    likeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleLike(movieContainer);
+    });
+    movieContainer.appendChild(likeBtn);
     
     movieContainer.addEventListener('click', () => {
       location.hash = `#movie=${movie.id}-${movie.title}`;
