@@ -179,7 +179,7 @@ footer {
 
 .header-container-back {
   display: grid;
-  grid-template-columns: 50px 1fr;
+  grid-template-columns: auto 1fr;
   justify-items: left;
   align-items: center;
 }
@@ -202,8 +202,25 @@ footer {
   background: linear-gradient(180deg, rgba(238, 204, 117, 0.5) 0%, rgba(238, 204, 117, 0) 72.92%);
 } 
 
+.home-title-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .header-title {
   margin-bottom: 16px;
+}
+
+.languageSelect {
+  margin-bottom: 16px;
+  border: 1px solid var(--purple-medium-1);
+  border-radius: 8px;
+  height: 32px;
+  width: 64px;
+  background-color: var(--purple-light-2);
+  text-align: center;
+  font-size: 26px;
 }
 
 .header-arrow {
@@ -248,8 +265,7 @@ footer {
 
 .trendingPreview-btn {
   border-radius: 8px;
-  height: 36px;
-  width: 120px;
+  padding: 8px 8px;
 }
 
 .trendingPreview-movieList,

@@ -97,6 +97,34 @@ const translations = {
   },
 };
 
+function updateLanguageOptions() {
+  const options = [
+    { value: "en", label: "🇺🇸" },
+    { value: "es", label: "🇪🇸" },
+    { value: "fr", label: "🇫🇷" },
+    { value: "de", label: "🇩🇪" },
+    { value: "it", label: "🇮🇹" },
+    { value: "pt", label: "🇵🇹" },
+  ];
+  let currentLanguage = localStorage.getItem("language");
+  if (!currentLanguage) {
+    currentLanguage = navigator.language || navigator.userLanguage;
+    currentLanguage = currentLanguage.toLowerCase();
+    currentLanguage = currentLanguage.substring(0, 2);
+  }
+  if (!options.find(option => option.value === currentLanguage)) {
+    currentLanguage = "en";
+  }
+  options.forEach(option => {
+    const languageOption = document.createElement("option");
+    languageOption.value = option.value;
+    languageOption.textContent = option.label;
+    if (option.value === currentLanguage) {
+      languageOption.selected = true;
+    }
+    languageSelect.appendChild(languageOption);
+  });
+}
 
 function getLangLabels(lang) {
   lang = lang || "en";

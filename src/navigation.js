@@ -14,20 +14,32 @@ arrowBtn.addEventListener('click', () => {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-  navigate();
+  
   // Add a initial loading state
   window.history.pushState({ loadUrl: window.location.href }, null, '')
+
+  // Load the language
+  updateLanguageOptions();
+  updateLabels(languageSelect.value);
 
   // Load favorites
   renderMovies(getFavorites(), favoriteMoviesList, true);
 
-  // Load the language
-  updateLabels(getLanguage());
+  // Navigate to the current hash
+  navigate();
+
 }, false);
 window.addEventListener('hashchange', () => {
   createInfiniteScroll.instance?.disconnect();
   navigate();
 }, false);
+
+languageSelect.addEventListener('change', () => {
+  const lang = languageSelect.value;
+  updateLabels(lang);
+  localStorage.setItem("language", lang);
+  navigate()
+})
 
 function navigate() {
 
@@ -58,6 +70,7 @@ function homePage() {
   arrowBtn.classList.add('inactive');
   arrowBtn.classList.remove('header-arrow--white');
   headerTitle.classList.remove('inactive');
+  languageSelect.classList.remove('inactive');
   headerCategoryTitle.classList.add('inactive');
   searchForm.classList.remove('inactive');
 
@@ -69,7 +82,7 @@ function homePage() {
 
   getTrendingMoviesPreview();
   getCategoriesPreview();
-  document.title = getLangLabels(getLanguage()).home_title;
+  document.title = getLangLabels(languageSelect.value).home_title;
 }
 
 function categoriesPage() {
@@ -80,6 +93,7 @@ function categoriesPage() {
   arrowBtn.classList.remove('inactive');
   arrowBtn.classList.remove('header-arrow--white');
   headerTitle.classList.add('inactive');
+  languageSelect.classList.add('inactive');
   headerCategoryTitle.classList.remove('inactive');
   searchForm.classList.add('inactive');
 
@@ -103,6 +117,7 @@ function movieDetailsPage() {
   arrowBtn.classList.remove('inactive');
   arrowBtn.classList.add('header-arrow--white');
   headerTitle.classList.add('inactive');
+  languageSelect.classList.add('inactive');
   headerCategoryTitle.classList.add('inactive');
   searchForm.classList.add('inactive');
 
@@ -128,6 +143,7 @@ function searchPage() {
   arrowBtn.classList.remove('inactive');
   arrowBtn.classList.remove('header-arrow--white');
   headerTitle.classList.add('inactive');
+  languageSelect.classList.add('inactive');
   headerCategoryTitle.classList.remove('inactive');
   searchForm.classList.remove('inactive');
 
@@ -140,8 +156,8 @@ function searchPage() {
   const query = decodeURI(location.hash.split('=')[1]).trim();
   getMoviesBySearch(query);
 
-  headerCategoryTitle.textContent = `${getLangLabels(getLanguage().search_heading)} "${query}"`;
-  document.title = getLangLabels(getLanguage()).search_title;
+  headerCategoryTitle.textContent = `${getLangLabels(languageSelect.value).search_heading} "${query}"`;
+  document.title = getLangLabels(languageSelect.value).search_title;
 }
 
 function trendsPage() {
@@ -152,6 +168,7 @@ function trendsPage() {
   arrowBtn.classList.remove('inactive');
   arrowBtn.classList.remove('header-arrow--white');
   headerTitle.classList.add('inactive');
+  languageSelect.classList.add('inactive');
   headerCategoryTitle.classList.remove('inactive');
   searchForm.classList.add('inactive');
 
@@ -162,6 +179,6 @@ function trendsPage() {
   movieDetailSection.classList.add('inactive');
 
   getTrendingMovies();
-  headerCategoryTitle.textContent = getLangLabels(getLanguage()).trends_heading;
-  document.title = getLangLabels(getLanguage()).trends_title;
+  headerCategoryTitle.textContent = getLangLabels(languageSelect.value).trends_heading;
+  document.title = getLangLabels(languageSelect.value).trends_title;
 }

@@ -19,6 +19,7 @@ const relatedMoviesContainer = $('.relatedMovies-scrollContainer');
 
 // Elements
 const headerTitle = $('.header-title');
+const languageSelect = $('.languageSelect');
 const arrowBtn = $('.header-arrow');
 const headerCategoryTitle = $('.header-title--categoryView');
 

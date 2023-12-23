@@ -1,5 +1,3 @@
-const getLanguage = () => navigator.language || navigator.userLanguage;
-
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
   headers: {
@@ -17,7 +15,7 @@ const createNoMoviesContainer = (container) => {
   const noMoviesContainer = document.createElement('div');
   noMoviesContainer.classList.add('no-movies-container');
   const noMoviesText = document.createElement('p');
-  noMoviesText.textContent = getLangLabels(getLanguage()).no_movies;
+  noMoviesText.textContent = getLangLabels(languageSelect.value).no_movies;
   noMoviesContainer.appendChild(noMoviesText);
   container.appendChild(noMoviesContainer);
 }
@@ -182,7 +180,7 @@ async function getTrendingMoviesPreview() {
   // Retrieve the movies from the API
   const { data } = await api('trending/movie/day', {
     params: {
-      language: getLanguage(),
+      language: languageSelect.value,
     }
   });
   const movies = data.results;
@@ -196,7 +194,7 @@ async function getCategoriesPreview() {
   // Retrieve the categories from the API
   const { data } = await api('genre/movie/list', {
     params: {
-      language: getLanguage(),
+      language: languageSelect.value,
     }
   });
   const categories = data.genres;
@@ -213,7 +211,7 @@ async function getMoviesByCategory(id, page = 1) {
     params: {
       with_genres: id,
       page,
-      language: getLanguage(),
+      language: languageSelect.value,
     }
   });
   const movies = data.results;
@@ -234,7 +232,7 @@ async function getMoviesBySearch(query, page = 1) {
     params: {
       query,
       page,
-      language: getLanguage(),
+      language: languageSelect.value,
     }
   });
   const movies = data.results;
@@ -254,7 +252,7 @@ async function getTrendingMovies(page = 1) {
   const { data } = await api('trending/movie/day', {
     params: {
       page,
-      language: getLanguage(),
+      language: languageSelect.value,
     }
   });
   const movies = data.results;
@@ -273,7 +271,7 @@ async function getMovieDetails(movieId) {
   // Retrieve the details from the API
   const { data: movie } = await api('movie/' + movieId, {
     params: {
-      language: getLanguage(),
+      language: languageSelect.value,
     }
   });
 
@@ -296,7 +294,7 @@ async function getMovieDetails(movieId) {
   // Retrieve the related movies from the API
   const { data } = await api('movie/' + movieId + '/recommendations', {
     params: {
-      language: getLanguage(),
+      language: languageSelect.value,
     }
   });
   const relatedMovies = data.results;
